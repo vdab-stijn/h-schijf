@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<cursisten>
+	<cursist>
+		<voornaam>a</voornaam>
+		<familienaam>Dalton</familienaam>
+		<email>joe@daltons.org</email>
+		<geboortedatum>1966-08-01</geboortedatum>
+		<traject>Java</traject>
+	</cursist>
+	<cursist>
+		<voornaam>Jack</voornaam>
+		<familienaam>Dalton</familienaam>
+		<email>joe@daltons.org</email>
+		<geboortedatum>1964-08-28</geboortedatum>
+		<traject>C#</traject>
+	</cursist>
+	<cursist>
+		<voornaam>Lucky</voornaam>
+		<familienaam>Luke</familienaam>
+		<email>lucky.luke@goodones.org</email>
+		<geboortedatum>1965-01-31</geboortedatum>
+		<traject>PHP</traject>
+	</cursist>
+</cursisten>

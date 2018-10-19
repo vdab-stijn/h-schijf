@@ -1,0 +1,223 @@
+CREATE DATABASE IF NOT EXISTS tuincentrum;
+USE tuincentrum;
+
+DROP TABLE IF EXISTS leveranciers;
+CREATE TABLE leveranciers (
+  id int(10) unsigned NOT NULL AUTO_INCREMENT,
+  naam varchar(30) NOT NULL,
+  adres varchar(30) NOT NULL,
+  postcode smallint(5) unsigned NOT NULL,
+  woonplaats varchar(30) NOT NULL,
+  aantalkinderen smallint(5) unsigned DEFAULT NULL,
+  PRIMARY KEY (id) USING BTREE,
+  KEY naam(naam)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+
+ALTER TABLE leveranciers DISABLE KEYS;
+INSERT INTO leveranciers (id,naam,adres,postcode,woonplaats,aantalkinderen) VALUES 
+ (1,'Hovenier','Zandweg 50',8560,'Wevelgem',2),
+ (2,'Baumgarten','Takstraat 13',8500,'Kortrijk',1),
+ (3,'Struik','Bessenlaan 1',8560,'Wevelgem',0),
+ (4,'Spitman','Achtertuin 9',8930,'Menen',3),
+ (5,'Dezaaier','De Gronden 11',8560,'Wevelgem',1),
+ (6,'Mooiweer','Verlengde zomerstraat 24',8930,'Menen',NULL),
+ (7,'Bloem','Linnaeushof 17',8500,'Kortrijk',2),
+ (8,'De Plukker','Koeleplekstraat 10',8560,'Wevelgem',NULL),
+ (9,'Erica','Berkenweg 87',8930,'Menen',0),
+ (10,'De groene kas','Glasweg 1',8930,'Menen',1),
+ (11,'Flora','Oeverstraat 76',8930,'Menen',2);
+ALTER TABLE leveranciers ENABLE KEYS;
+
+DROP TABLE IF EXISTS soorten;
+CREATE TABLE soorten (
+  id int(10) unsigned NOT NULL AUTO_INCREMENT,
+  naam varchar(10) NOT NULL,
+  magazijnid tinyint(3) unsigned DEFAULT NULL,
+  PRIMARY KEY (id) USING BTREE,
+  KEY naam(naam)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+
+ALTER TABLE soorten DISABLE KEYS;
+INSERT INTO soorten(id,naam,magazijnid) VALUES 
+ (1,'1-jarig',2),
+ (2,'2-jarig',3),
+ (3,'Bol',1),
+ (4,'Boom',3),
+ (5,'Heester',4),
+ (6,'Heide',2),
+ (7,'Klim',2),
+ (8,'Kruid',3),
+ (9,'Vast',1),
+ (10,'Water',4);
+ALTER TABLE soorten ENABLE KEYS;
+
+DROP TABLE IF EXISTS planten;
+CREATE TABLE `planten` (
+  id int(10) unsigned NOT NULL AUTO_INCREMENT,
+  naam varchar(30) NOT NULL,
+  soortid int(10) unsigned NOT NULL,
+  leverancierid int(10) unsigned NOT NULL,
+  kleur varchar(10) NOT NULL,
+  verkoopprijs decimal(19,2) unsigned NOT NULL,
+  PRIMARY KEY (id) USING BTREE,
+  KEY FK_planten_leveranciers(leverancierid),
+  KEY FK_planten_soorten(soortid),
+  KEY naam(naam),
+  CONSTRAINT FK_planten_soorten FOREIGN KEY (soortid) REFERENCES soorten(id),
+  CONSTRAINT FK_planten_leveranciers FOREIGN KEY(leverancierid) REFERENCES leveranciers(id)
+) ENGINE=InnoDB AUTO_INCREMENT=120 DEFAULT CHARSET=latin1;
+
+ALTER TABLE planten DISABLE KEYS;
+INSERT INTO planten (id,naam,soortid,leverancierid,kleur,verkoopprijs) VALUES 
+ (1,'Rododendron',5,6,'Rood',390),
+ (2,'Sering',5,6,'Paars',390),
+ (3,'Kruisdistel',9,6,'Blauw',60),
+ (4,'Vuurdoorn',5,2,'Wit',100),
+ (5,'Klokjesbloem',2,4,'Blauw',36),
+ (6,'Kogeldistel',9,6,'Blauw',60),
+ (7,'Paardekastanje',4,10,'Wit',350),
+ (8,'Linde',4,4,'Geel',850),
+ (9,'Wijnstok',7,3,'Onbekend',200),
+ (10,'Violier',2,10,'Gemengd',20),
+ (11,'Zonnebloem',2,4,'Geel',36),
+ (12,'Populier',4,3,'Wit',90),
+ (13,'Cypergras',10,2,'Onbekend',100),
+ (14,'Zilverspar',4,6,'Onbekend',390),
+ (16,'Boterbloem',9,6,'Wit',60),
+ (17,'Hondstong',9,7,'Blauw',50),
+ (18,'Stokroos',9,8,'Rood',40),
+ (19,'Dwergcypres',4,7,'Onbekend',270),
+ (20,'Ganzerik',9,2,'Rood',45),
+ (21,'Daglelie',9,6,'Rood',60),
+ (22,'Dovenetel',9,8,'Geel',40),
+ (23,'Muurbloem',2,4,'Bruin',36),
+ (24,'Pioen',9,3,'Rood',90),
+ (25,'Korenbloem',9,8,'Blauw',40),
+ (26,'Bereklauw',9,5,'Wit',70),
+ (27,'Klokjesbloem',9,6,'Blauw',60),
+ (28,'Lupine',9,7,'Gemengd',50),
+ (29,'Violier',8,11,'Gemengd',20),
+ (30,'Judaspenning',2,10,'Lila',20),
+ (31,'Azalea',5,10,'Oranje',350),
+ (32,'Esdoorn',4,10,'Groen',350),
+ (33,'Dragon',8,8,'Wit',40),
+ (34,'Forsythia',5,1,'Geel',110),
+ (35,'Kornoelje',5,1,'Geel',110),
+ (36,'Basilicum',8,8,'Wit',40),
+ (37,'Begonia',7,3,'Rood',13.00),
+ (38,'Sierui',3,10,'Blauw',75.00),
+ (39,'Vingerhoedskruid',9,8,'Gemengd',40),
+ (40,'Vlambloem',8,9,'Gemengd',30),
+ (41,'Aster',4,5,'Gemengd',15),
+ (42,'Akelei',9,7,'Blauw',50),
+ (43,'Viooltje',2,11,'Gemengd',10),
+ (44,'Azijnboom',4,4,'Rood',190),
+ (45,'Margriet',9,7,'Wit',50),
+ (46,'Krokus',3,3,'Wit',2),
+ (47,'Monnikskap',9,6,'Violet',60),
+ (48,'Lijsterbes',4,8,'Wit',150),
+ (49,'Bosrank',7,10,'Paars',130),
+ (50,'Iris',3,3,'Blauw',2),
+ (51,'Kikkerbeet',10,4,'Wit',25),
+ (52,'Magnolia',5,5,'Wit',290),
+ (53,'Acacia',4,10,'Wit',350),
+ (54,'Dotterbloem',10,3,'Geel',90),
+ (55,'Rozemarijn',8,8,'Blauw',40),
+ (56,'Meidoorn',4,6,'Roze',390),
+ (57,'Liguster',5,9,'Wit',8),
+ (58,'Ridderspoor',9,6,'Lila',60),
+ (59,'Dille',8,8,'Geel',40),
+ (60,'Engels gras',9,8,'Rood',40),
+ (61,'Kamille',9,6,'Wit',60),
+ (62,'Zuurbes',5,5,'Oranje',70),
+ (63,'Blauw druifje',3,3,'Blauw',2),
+ (64,'Winterheide',6,8,'Wit',40),
+ (65,'Berk',4,8,'Onbekend',150),
+ (66,'Passiebloem',7,4,'Blauw',190),
+ (67,'Toverhazelaar',5,3,'Geel',640),
+ (68,'Korenbloem',1,10,'Gemengd',20),
+ (69,'Beuk',4,9,'Groen',250),
+ (70,'Waterhyacint',10,2,'Blauw',100),
+ (71,'Klaproos',9,6,'Rood',60),
+ (72,'Tulpeboom',4,11,'Geel',450),
+ (73,'Peterselie',8,8,'Onbekend',40),
+ (74,'Majoraan',8,8,'Paars',40),
+ (75,'Pampusgras',9,4,'Wit',190),
+ (76,'Leverkruid',9,7,'Paars',50),
+ (77,'Lisdodde',10,3,'Geel',90),
+ (78,'Chrysant',1,6,'Geel',16),
+ (79,'Nagelkruid',9,6,'Oranje',60),
+ (80,'Zuring',8,8,'Rood',40),
+ (81,'Waterlelie',10,10,'Wit',240),
+ (82,'Struikheide',6,8,'Gemengd',40),
+ (83,'Blaasjeskruid',10,7,'Geel',50),
+ (84,'Boomheide',6,1,'Roze',110),
+ (85,'Tijm',8,7,'Paars',50),
+ (86,'Ridderspoor',1,10,'Gemengd',20),
+ (87,'Spar',4,9,'Onbekend',250),
+ (88,'Gipskruid',9,3,'Wit',90),
+ (89,'Brem',5,2,'Geel',100),
+ (90,'Dopheide',6,9,'Rood',30),
+ (91,'Wolfsmelk',9,7,'Geel',50),
+ (92,'Klaproos',2,10,'Gemengd',20),
+ (93,'Dahlia',1,10,'Gemengd',20),
+ (94,'Vuurwerkplant',9,5,'Roze',70),
+ (95,'Anemoon',9,5,'Roze',70),
+ (96,'Salie',8,8,'Violet',40),
+ (97,'Judasboom',4,4,'Roze',190),
+ (98,'Peperboompje',5,4,'Roze',300),
+ (99,'Hondstong',2,10,'Blauw',20),
+ (100,'Hulst',5,11,'Onbekend',450),
+ (101,'Gouden regen',4,1,'Geel',440),
+ (102,'Wolgras',10,5,'Wit',70),
+ (103,'Bieslook',8,8,'Paars',40),
+ (104,'Alyssum',1,1,'Paars',11),
+ (105,'Klimop',7,8,'Onbekend',150),
+ (106,'Kalmoes',10,3,'Onbekend',90),
+ (107,'Petunia',1,6,'Roze',16),
+ (108,'Munt',8,8,'Paars',40),
+ (109,'Anjer',9,6,'Wit',60),
+ (110,'Sleutelbloem',2,8,'Gemengd',40),
+ (111,'Kervel',8,8,'Wit',40),
+ (112,'Zonnebloem',9,8,'Geel',40),
+ (113,'Leeuwebekje',1,6,'Gemengd',16),
+ (114,'Tulp',3,9,'Geel',8),
+ (115,'Gipskruid',1,10,'Wit',20),
+ (116,'Olijfwilg',5,3,'Geel',200),
+ (117,'Klaproos',1,10,'Gemengd',20),
+ (118,'Vuurpijl',9,5,'Rood',70),
+ (119,'Jeneverbes',4,10,'Onbekend',130);
+ALTER TABLE planten ENABLE KEYS;
+
+
+DROP TABLE IF EXISTS werknemers;
+CREATE TABLE werknemers (
+  id int(10) unsigned NOT NULL AUTO_INCREMENT,
+  voornaam varchar(50) NOT NULL,
+  familienaam varchar(50) NOT NULL,
+  geboorte date NOT NULL,
+  indienst date NOT NULL,
+  PRIMARY KEY (id) USING BTREE,
+  KEY familienaam (familienaam)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+
+ALTER TABLE werknemers DISABLE KEYS;
+INSERT INTO werknemers (id,voornaam,familienaam,geboorte,indienst) VALUES 
+ (1,'Lucky','Luke','1961-01-31','1999-01-01'),
+ (2,'Joe','Dalton','1962-02-28','1999-02-02'),
+ (3,'Jack','Dalton','1963-03-31','1999-03-03'),
+ (4,'William','Dalton','1964-04-30','2000-04-04'),
+ (5,'Averell','Dalton','1965-05-31','2000-05-05'),
+ (6,'Sarah','Bernhardt','1967-07-31','2000-07-07'),
+ (7,'Bill','Bufalo','1968-08-31','2000-08-08'),
+ (8,'Charles','Bolles','1969-09-30','2000-09-09'),
+ (9,'Wyatt','Earp','1971-11-30','2002-11-11'),
+ (10,'Jesse','James','1972-12-31','2002-12-12'),
+ (11,'Mattie','Silks','1973-01-01','2003-01-01'),
+ (12,'Belle','Star','1973-02-02','2003-02-02'),
+ (13,'Soapy','Smith','1973-03-03','2003-03-03'),
+ (14,'Frederic','Remington','1973-04-04','2003-04-04'),
+ (15,'Isaac','Parker','1974-05-05','2003-05-05'),
+ (16,'George','Maledon','1974-06-06','2003-06-06'),
+ (17,'Jane','Calamity','1970-10-31','2001-10-10');
+ALTER TABLE werknemers ENABLE KEYS;
